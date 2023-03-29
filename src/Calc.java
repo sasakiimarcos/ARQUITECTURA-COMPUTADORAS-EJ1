@@ -1,39 +1,48 @@
-/*
+
 public class Calc implements Calculator {
 
     final String[] hex_code = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
 
-    String sum(String a, String b) {
-        String finalnumber = "";
-        
-        if(a.length() < b.length()) a = padLeftZeros(a, b.length() - a.length());
-        else b = padLeftZeros(b, a.length() - b.length());         // leaves them with same length
-
-        if (a.length() == b.length()) {
-            int carryover = 0;
-          for (int i = 0; i < a.length(); i++) {
-              // checks different cases to deal with carryover idk
-              switch((int) a.charAt(i) + (int) b.charAt(i) + carryover){
-                  case(0):
-                      finalnumber += Integer.toString(0);
-                      break;
-                  case(1):
-                      finalnumber += Integer.toString(1);
-                      break;
-                  case(2):
-                      finalnumber += Integer.toString(0);
-                      carryover = 1;
-                      break;
-                  case(3):
-                      finalnumber += Integer.toString(1);
-                      carryover = 1;
-                      break;
-              }
-          }
-        } else if (a.length() > b.length()) {
-            
+    @Override
+    public String sum(String a, String b){
+        int carryover = 0;
+        String stringA = a;
+        String stringB = b;
+        StringBuilder finalString = new StringBuilder("");
+        if (a.length() > b.length()) {
+            stringB = addZeros(b, a.length());
+        } else if (a.length() < b.length()) {
+            stringA = addZeros(b, a.length());
         }
+
+        for (int i = stringA.length() - 1;i >= 0; i-- ) {
+            switch (Integer.parseInt(String.valueOf(stringA.charAt(i))) + Integer.parseInt(String.valueOf(stringB.charAt(i))) + carryover) {
+                case (0) -> {
+                    finalString.insert(0, 0);
+                    carryover = 0;
+                }
+                case (1) -> {
+                    finalString.insert(0, 1);
+                    carryover = 0;
+                }
+                case (2) -> {
+                    finalString.insert(0, 0);
+                    carryover = 1;
+                }
+                case (3) -> {
+                    finalString.insert(0, 1);
+                    carryover = 1;
+                }
+            }
+        }
+        if (carryover == 1) {
+            finalString.insert(0, "1");;
+        }
+
+        return finalString.toString();
     }
+
+
     String sub(String a, String b) {
         // Get b as a char array
         char[] bChars = b.toCharArray();
@@ -89,8 +98,29 @@ public class Calc implements Calculator {
         return aux + n;
     }
 
+//    Function that returns the binary complement of a given binary number
+        private String getComplement (String a) {
+        StringBuilder newString = new StringBuilder("");
+        for (int i = a.length() - 1; i >= 0; i--) {
+            if (Character.toString(a.charAt(i)).equals("1")) {
+                newString.insert(0, "0");
+            } else {
+                newString.insert(0, "1");
+            }
+        }
+        return newString.toString();
+    }
+
+//    Function that adds zeros to the left of a binary number
+    private String addZeros(String a, int size) {
+        StringBuilder newString = new StringBuilder(a);
+        for(int i = 0; i < size - a.length(); i++) {
+            newString.insert(0, "0");
+        }
+        return newString.toString();
+    }
+
     public Integer to_decimal(String n, int b){
 
     }
 }
-*/
