@@ -6,14 +6,15 @@ public class Calc implements Calculator {
     @Override
     public String sum(String a, String b){
         int carryover = 0;
-        String stringA = a;
-        String stringB = b;
+        String stringA = stripZeros(a);
+        String stringB = stripZeros(b);
         StringBuilder finalString = new StringBuilder();
-        if (a.length() > b.length()) {
-            stringB = addZeros(b, a.length());
-        } else if (a.length() < b.length()) {
-            stringA = addZeros(b, a.length());
+        if (stringA.length() > stringB.length()) {
+            stringB = addZeros(stringB, stringA.length());
+        } else if (stringA.length() < stringB.length()) {
+            stringA = addZeros(stringA, stringB.length());
         }
+
         for (int i = stringA.length() - 1;i >= 0; i-- ) {
             switch (Integer.parseInt(String.valueOf(stringA.charAt(i))) + Integer.parseInt(String.valueOf(stringB.charAt(i))) + carryover) {
                 case (0) -> {
@@ -35,7 +36,7 @@ public class Calc implements Calculator {
             }
         }
         if (carryover == 1) {
-            finalString.insert(0, "1");
+            finalString.insert(0, "1");;
         }
         return finalString.toString();
     }
@@ -50,7 +51,7 @@ public class Calc implements Calculator {
             } else if (a.length() < b.length()) {
                 stringA = addZeros(b, a.length());
             }
-            StringBuilder finalString = new StringBuilder(sum(stringA, sum(getComplement(stringB),"1")));
+            StringBuilder finalString = new StringBuilder(sum(stringA, getComplement2(stringB)));
             return finalString.deleteCharAt(0).toString();
         } else {
             throw new RuntimeException("Subtrahend is greater than the minuend :(");
@@ -113,8 +114,8 @@ public class Calc implements Calculator {
         return countA > countB;
     }
 
-//    Function that returns the binary complement of a given binary number
-    private String getComplement (String a) {
+//    Function that returns the 2's binary complement of a given binary number
+    private String getComplement2 (String a) {
     StringBuilder newString = new StringBuilder("");
         for (int i = a.length() - 1; i >= 0; i--) {
             if (Character.toString(a.charAt(i)).equals("1")) {
@@ -123,7 +124,17 @@ public class Calc implements Calculator {
                 newString.insert(0, "1");
             }
         }
-        return newString.toString();
+        return sum("1", newString.toString());
+    }
+
+//    Function that strips unnecessary 0s from the left of a binary number
+    private String stripZeros(String a) {
+        for (int i = 0; i < a.length(); i++) {
+            if (String.valueOf(a.charAt(i)).equals("1")) {
+                return a.substring(i);
+            }
+        }
+        return "0";
     }
 
 //    Function that adds zeros to the left of a binary number
