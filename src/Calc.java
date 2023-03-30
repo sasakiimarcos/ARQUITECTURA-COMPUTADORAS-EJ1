@@ -129,13 +129,15 @@ public class Calc implements Calculator {
             stringA = addZeros(b, a.length());
         }
         for (int i = 0; i < stringA.length(); i++) {
-            countA += Integer.parseInt(String.valueOf(stringA.charAt(i))) * Math.pow(2, stringA.length() - i);
-            countB += Integer.parseInt(String.valueOf(stringB.charAt(i))) * Math.pow(2, stringB.length() - i);
+            if (String.valueOf(stringA.charAt(i)).equals("1") && String.valueOf(stringB.charAt(i)).equals("0")) {
+                return true;
+            } else if (String.valueOf(stringB.charAt(i)).equals("1") && String.valueOf(stringA.charAt(i)).equals("0")) {
+                return false;
+            }
         }
-        return countA > countB;
+        return false;
     }
 
-    //    Function that returns the binary complement of a given binary number
     //    Function that returns the 2's binary complement of a given binary number
     private String getComplement2 (String a) {
         StringBuilder newString = new StringBuilder("");
