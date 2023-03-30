@@ -8,13 +8,12 @@ public class Calc implements Calculator {
         int carryover = 0;
         String stringA = a;
         String stringB = b;
-        StringBuilder finalString = new StringBuilder("");
+        StringBuilder finalString = new StringBuilder();
         if (a.length() > b.length()) {
             stringB = addZeros(b, a.length());
         } else if (a.length() < b.length()) {
             stringA = addZeros(b, a.length());
         }
-
         for (int i = stringA.length() - 1;i >= 0; i-- ) {
             switch (Integer.parseInt(String.valueOf(stringA.charAt(i))) + Integer.parseInt(String.valueOf(stringB.charAt(i))) + carryover) {
                 case (0) -> {
@@ -36,30 +35,28 @@ public class Calc implements Calculator {
             }
         }
         if (carryover == 1) {
-            finalString.insert(0, "1");;
+            finalString.insert(0, "1");
         }
-
         return finalString.toString();
     }
 
-
-    String sub(String a, String b) {
-        // Get b as a char array
-        char[] bChars = b.toCharArray();
-
-        // Swap the char array to get b's complement
-        for (int i = 0; i < b.length(); i++) {
-            if (bChars[i] == 1) bChars[i] = 0;
-            else bChars[i] = 1;
+    @Override
+    public String sub(String a, String b){
+        if (isGreaterThan(a, b)) {
+            String stringA = a;
+            String stringB = b;
+            if (a.length() > b.length()) {
+                stringB = addZeros(b, a.length());
+            } else if (a.length() < b.length()) {
+                stringA = addZeros(b, a.length());
+            }
+            StringBuilder finalString = new StringBuilder(sum(stringA, sum(getComplement(stringB),"1")));
+            return finalString.deleteCharAt(0).toString();
+        } else {
+            throw new RuntimeException("Subtrahend is greater than the minuend :(");
         }
-
-        // Get the complement as a string
-        String bComplement = new String(bChars);
-
-        // Add the complement to a and ignore the carry
-        return (a + b).substring(1);
-
     }
+
     //String mult(String a, String b)
     //String div(String a, String b)
 
@@ -98,9 +95,27 @@ public class Calc implements Calculator {
         return aux + n;
     }
 
+//    Function that returns whether the first binary number is greater than the second one
+    private Boolean isGreaterThan (String a, String b) {
+        String stringA = a;
+        String stringB = b;
+        int countA = 0;
+        int countB = 0;
+        if (a.length() > b.length()) {
+            stringB = addZeros(b, a.length());
+        } else if (a.length() < b.length()) {
+            stringA = addZeros(b, a.length());
+        }
+        for (int i = 0; i < stringA.length(); i++) {
+            countA += Integer.parseInt(String.valueOf(stringA.charAt(i))) * Math.pow(2, stringA.length() - i);
+            countB += Integer.parseInt(String.valueOf(stringB.charAt(i))) * Math.pow(2, stringB.length() - i);
+        }
+        return countA > countB;
+    }
+
 //    Function that returns the binary complement of a given binary number
-        private String getComplement (String a) {
-        StringBuilder newString = new StringBuilder("");
+    private String getComplement (String a) {
+    StringBuilder newString = new StringBuilder("");
         for (int i = a.length() - 1; i >= 0; i--) {
             if (Character.toString(a.charAt(i)).equals("1")) {
                 newString.insert(0, "0");
