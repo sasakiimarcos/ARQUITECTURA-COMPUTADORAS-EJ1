@@ -27,13 +27,14 @@ class BCDEncoderTest {
 
     @Test
     void decodeSingleNumber() {
-        assertEquals(1, bcdEncoder.decode(bcdCode[1]));
-        fail(); //TODO(Do proper tests)
+        for(int i = 0; i < bcdCode.length; i++)
+            assertEquals(i, bcdEncoder.decode(bcdCode[i]));
     }
 
     @Test
     void decodeMultipleNumber() {
         assertEquals(123, bcdEncoder.decode(bcdCode[1] + bcdCode[2] + bcdCode[3]));
-        fail(); //TODO(Do proper tests)
+        assertEquals(11235, bcEncoder.decode(bcdCode[1] + bcdCode[1] + bcdCode[2] + bcdCode[3] + bcdCode[5]))
+        assertEquals(9856, bcEncoder.decode(bcdCode[9] + bcdCode[8] + bcdCode[5] + bcdCode[6]))
     }
 }
