@@ -83,7 +83,14 @@ public class Calc implements Calculator {
         }
     }
 
-    //String mult(String a, String b)
+    public String mult(String a, String b) {
+        String finalString = "0";
+        for (int i = 0; i < to_decimal(a, 2); i++) {
+            finalString = sum(finalString, b);
+        }
+        return finalString;
+    }
+
     //String div(String a, String b)
 
     public String toHex(String binary) {
@@ -170,7 +177,12 @@ public class Calc implements Calculator {
         return newString.toString();
     }
 
-    public Integer to_decimal(String n, int b){
-
+    //    Function that turns a base 2 - 9 number into a decimal one
+    private int to_decimal(String n, int b){
+        int finalSum = 0;
+        for(int i = 0; i < n.length(); i++) {
+            finalSum += Integer.parseInt(String.valueOf(n.charAt(i))) * Math.pow(b, n.length() - i -1);
+        }
+        return finalSum;
     }
 }
