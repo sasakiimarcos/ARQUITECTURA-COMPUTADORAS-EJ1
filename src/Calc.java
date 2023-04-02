@@ -102,7 +102,7 @@ public class Calc implements Calculator {
         // Make sure to raise ArithmeticException when dividing by zero
         // (this is expected in the tests)
         String finalString = "0";
-        if (toDecimal(b) == 0){throw new ArithmeticException("Unable to divide by zero");}
+        if (toDecimal(b) == 0){throw new ArithmeticException();}
         else{
             for (int i = 0; i <toDecimal(a) ; i++) {
                 finalString = sub(finalString,b);
