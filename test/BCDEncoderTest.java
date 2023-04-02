@@ -34,7 +34,7 @@ class BCDEncoderTest {
     @Test
     void decodeMultipleNumber() {
         assertEquals(123, bcdEncoder.decode(bcdCode[1] + bcdCode[2] + bcdCode[3]));
-        assertEquals(11235, bcEncoder.decode(bcdCode[1] + bcdCode[1] + bcdCode[2] + bcdCode[3] + bcdCode[5]))
-        assertEquals(9856, bcEncoder.decode(bcdCode[9] + bcdCode[8] + bcdCode[5] + bcdCode[6]))
+        assertEquals(11235, bcdEncoder.decode(bcdCode[1] + bcdCode[1] + bcdCode[2] + bcdCode[3] + bcdCode[5]));
+        assertEquals(9856, bcdEncoder.decode(bcdCode[9] + bcdCode[8] + bcdCode[5] + bcdCode[6]));
     }
 }
