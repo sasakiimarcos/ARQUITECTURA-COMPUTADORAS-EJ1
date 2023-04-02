@@ -101,8 +101,14 @@ public class Calc implements Calculator {
     public String div(String a, String b) {
         // Make sure to raise ArithmeticException when dividing by zero
         // (this is expected in the tests)
-
-        return "Not implemented";
+        String finalString = "0";
+        if (toDecimal(b) == 0){throw new ArithmeticException("Unable to divide by zero");}
+        else{
+            for (int i = 0; i <toDecimal(a) ; i++) {
+                finalString = sub(finalString,b);
+            }
+        }
+        return finalString;
     }
 
     public String toHex(String binary) {
