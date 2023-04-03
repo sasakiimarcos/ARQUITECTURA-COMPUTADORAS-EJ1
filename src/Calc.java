@@ -100,21 +100,22 @@ public class Calc implements Calculator {
     }
 
     public String div(String a, String b) {
-        // Make sure to raise ArithmeticException when dividing by zero
-        // (this is expected in the tests)
         // Supposing "a" is divided by "b"
         String fixed_b = addZeros(b,a.length()-b.length());
         String fixed_a = addZeros(a,b.length() - a.length());
         String finalString = "";
-        if (toDecimal(b) == 0){throw new ArithmeticException();} else if (toDecimal(b)==1) {return a;}
+        int counter =0;
+        if (toDecimal(b) == 0){throw new ArithmeticException("Cannot divide by zero");} else if (toDecimal(b)==1) {return a;}
         else if(toDecimal(a) == toDecimal(b)){return "1";}
-        else {
-            if (a.length() < b.length()) {
-                a = fixed_a;}
-            else if (b.length() < a.length()) {b = fixed_b;}
 
-            finalString+=toBinary(toDecimal(a)/toDecimal(b));
-        }
+        if (a.length() < b.length()) {
+            a = fixed_a;}
+        else if (b.length() < a.length()) {b = fixed_b;}
+        String count = b;
+        while (isGreaterThan(a,count)){
+            counter +=1;
+            count = sum(count,b);}
+        finalString = toBinary(counter);
         return finalString;
     }
 
