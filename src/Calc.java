@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SimpleTimeZone;
 
 import static java.util.Map.entry;
 
@@ -101,12 +102,18 @@ public class Calc implements Calculator {
     public String div(String a, String b) {
         // Make sure to raise ArithmeticException when dividing by zero
         // (this is expected in the tests)
-        String finalString = "0";
-        if (toDecimal(b) == 0){throw new ArithmeticException();}
-        else{
-            for (int i = 0; i <toDecimal(a) ; i++) {
-                finalString = sub(finalString,b);
-            }
+        // Supposing "a" is divided by "b"
+        String fixed_b = addZeros(b,a.length()-b.length());
+        String fixed_a = addZeros(a,b.length() - a.length());
+        String finalString = "";
+        if (toDecimal(b) == 0){throw new ArithmeticException();} else if (toDecimal(b)==1) {return a;}
+        else if(toDecimal(a) == toDecimal(b)){return "1";}
+        else {
+            if (a.length() < b.length()) {
+                a = fixed_a;}
+            else if (b.length() < a.length()) {b = fixed_b;}
+
+            finalString+=toBinary(toDecimal(a)/toDecimal(b));
         }
         return finalString;
     }
@@ -197,6 +204,11 @@ public class Calc implements Calculator {
         for(int i = 0; i < n.length(); i++) {
             finalSum += Integer.parseInt(String.valueOf(n.charAt(i))) * Math.pow(2, n.length() - i -1);
         }
-        return finalSum;
-    }
+        return finalSum;}
+    private String toBinary(int x) {
+        if (x == 0){return "0";}
+        StringBuilder binary = new StringBuilder();
+        while (x>0){
+            int bit = x%2; binary.insert(0,bit); x/=2;}
+        return binary.toString();}
 }

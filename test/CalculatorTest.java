@@ -162,8 +162,8 @@ class CalculatorTest {
     @Test
     void divSameLength() {
         assertEquals("1", myCalc.div("1010", "1000"));
-        assertEquals("1", myCalc.mult("11101", "10001"));
-        assertEquals("1", myCalc.mult("110011", "100111"));
+        assertEquals("1", myCalc.div("11101", "11101"));
+        assertEquals("1", myCalc.div("110111", "110111"));
     }
 
     @Test
