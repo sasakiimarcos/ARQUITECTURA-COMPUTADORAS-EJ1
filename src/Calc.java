@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SimpleTimeZone;
 
 import static java.util.Map.entry;
 
@@ -103,16 +102,20 @@ public class Calc implements Calculator {
         // Supposing "a" is divided by "b"
         String fixed_b = addZeros(b,a.length()-b.length());
         String fixed_a = addZeros(a,b.length() - a.length());
+
+        String stripped_a = stripZeros(a); String stripped_b = stripZeros(b);
+
         String finalString = "";
         int counter =0;
         if (toDecimal(b) == 0){throw new ArithmeticException("Cannot divide by zero");} else if (toDecimal(b)==1) {return a;}
-        else if(toDecimal(a) == toDecimal(b)){return "1";}
+        else if(stripped_b.equals(stripped_a)){return "1";}
 
         if (a.length() < b.length()) {
             a = fixed_a;}
         else if (b.length() < a.length()) {b = fixed_b;}
+
         String count = b;
-        while (isGreaterThan(a,count)){
+        while (isGreaterThan(a,count) || a.equals(count)){
             counter +=1;
             count = sum(count,b);}
         finalString = toBinary(counter);
