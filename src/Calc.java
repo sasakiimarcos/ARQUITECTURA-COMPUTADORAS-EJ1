@@ -105,7 +105,6 @@ public class Calc implements Calculator {
 
         String stripped_a = stripZeros(a); String stripped_b = stripZeros(b);
 
-        String finalString = "";
         int counter =0;
         if (toDecimal(b) == 0){throw new ArithmeticException("Cannot divide by zero");} else if (toDecimal(b)==1) {return a;}
         else if(stripped_b.equals(stripped_a)){return "1";}
@@ -118,8 +117,7 @@ public class Calc implements Calculator {
         while (isGreaterThan(a,count) || a.equals(count)){
             counter +=1;
             count = sum(count,b);}
-        finalString = toBinary(counter);
-        return finalString;
+        return toBinary(counter);
     }
 
     public String toHex(String binary) {
